@@ -1,66 +1,57 @@
-const cRad = (degrees) => degrees * Math.PI / 180
-const cDeg = (radians) => radians * 180 / Math.PI
-
-function Point(angle, circleRadius, asDegrees = true, precision = 6) {
-    if (asDegrees) {
-        this.degrees = angle
-        this.radians = cRad(angle)
-    }
-    else {
-        this.degrees = cDeg(radians)
-        this.radians = angle
-    }
-
-    this.degrees = this.degrees % 360
-    this.radians = this.radians % (Math.PI * 2)
-
+// constructor used to create a Point object
+function Point(angle, circleRadius, precision = 4) {
+    // capture input parameters
+    this.degrees = angle % 360
+    this.radians = cRad(this.degrees)
     this.radius = circleRadius
+
+    // calculate X coordiante value
     this.x = Math.cos(this.radians) * this.radius
     this.x = this.x.toFixed(precision)
+
+    // calculate Y coordiante value
     this.y = Math.sin(this.radians) * this.radius
     this.y = this.y.toFixed(precision)
 };
 
+// converts value in degrees to radians
+const cRad = (degrees) => degrees * Math.PI / 180
 
+// converts value in radians to degrees
+const cDeg = (radians) => radians * 180 / Math.PI
+
+
+
+// generates html used to display coordinate data to user
 function printTableData(points) {
-    function clearBody() {
-        while (tableBody.firstChild) {
-            tableBody.firstChild.remove()
-        }
-    }
+    const tableBody = $('#table-body');
 
-    function printBody() {
-        clearBody()
-        for (var i = 0; i < points.length; i++) {
-            tableBody.insertAdjacentHTML('beforeend', ` <tr>
-                                                            <th scope="row">${i}</th>
-                                                            <td>${points[i].radians}</td>
-                                                            <td>${points[i].degrees}</td>
-                                                            <td>${points[i].x}</td>
-                                                            <td>${points[i].y}</td>
-                                                        </tr>`);
-        }
-    }
+    tableBody.empty()
 
-    const tableBody = document.getElementById('table-body');
-    printBody()
+    for (var i = 0; i < points.length; i++) {
+        tableBody.append(`  <tr>
+                                <th scope="row">${i}</th>
+                                <td>${points[i].degrees}</td>
+                                <td>${points[i].x}</td>
+                                <td>${points[i].y}</td>
+                            </tr>`);
+    }
 }
 
 
+// initiates hole position calculations
 function calculate() {
-    let holeCount = document.getElementById('hole-count').value
-    let circleDia = document.getElementById('circle-dia').value
-    let startAng = parseFloat(document.getElementById('start-angle').value)
-    let holeInc = 360 / holeCount
-
+    const holeCount = $('#hole-count').val()
+    const circleDia = $('#circle-dia').val()
+    const startAng = parseFloat($('#start-angle').val())
+    const holeInc = 360 / holeCount
     const myPoints = []
+
     for (var i = startAng; i < 360 + startAng; i += holeInc) {
         myPoints.push(new Point(i, circleDia / 2))
     }
 
-    console.table(myPoints)
     printTableData(myPoints)
 }
 
-document.getElementById('calculate')
-    .addEventListener('click', calculate)
+$('#calculate').on('click', calculate)
