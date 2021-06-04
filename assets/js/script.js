@@ -21,7 +21,6 @@ const cRad = (degrees) => degrees * Math.PI / 180
 const cDeg = (radians) => radians * 180 / Math.PI
 
 
-
 // generates html used to display coordinate data to user
 function printTableData(points) {
     const tableBody = $('#table-body');
@@ -30,7 +29,7 @@ function printTableData(points) {
 
     for (var i = 0; i < points.length; i++) {
         tableBody.append(`  <tr>
-                                <th scope="row">${i}</th>
+                                <th scope="row">${i + 1}</th>
                                 <td>${points[i].degrees}</td>
                                 <td>${points[i].x}</td>
                                 <td>${points[i].y}</td>
@@ -41,8 +40,8 @@ function printTableData(points) {
 
 // initiates hole position calculations
 function calculate() {
-    const holeCount = $('#hole-count').val()
-    const circleDia = $('#circle-dia').val()
+    const holeCount = $('#instances').val()
+    const circleDia = $('#circle-diameter').val()
     const startAng = parseFloat($('#start-angle').val())
     const holeInc = 360 / holeCount
     const myPoints = []
@@ -54,4 +53,7 @@ function calculate() {
     printTableData(myPoints)
 }
 
-$('#calculate').on('click', calculate)
+$('form').on('submit', (e) => {
+    e.preventDefault()
+    calculate()
+})

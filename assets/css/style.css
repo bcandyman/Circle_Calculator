@@ -1,0 +1,11 @@
+body{
+    background-image: url('../images/beige-tiles.png');
+}
+
+table, form{
+    background-color: white;
+}
+
+.container{
+    background-color: whitesmoke;
+}
