@@ -6,6 +6,11 @@ table, form{
     background-color: white;
 }
 
+#plotter{
+    height: 100%;
+    width: 100%;
+}
+
 .container{
     background-color: whitesmoke;
 }
