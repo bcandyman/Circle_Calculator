@@ -5,10 +5,10 @@ body{
 table, form{
     background-color: white;
 }
-
 #plotter{
     height: 100%;
     width: 100%;
+    color: white;
 }
 
 .container{
